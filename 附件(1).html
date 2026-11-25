@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BDSM 属性测试 · 你是哪一种人</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+/* ===================== 基础与主题 ===================== */
+:root{
+  --bg:#0a090c;
+  --bg-2:#121019;
+  --ink:#ece7e1;
+  --ink-dim:#a49da6;
+  --ink-faint:#6f6874;
+  --gold:#d9b36c;
+  --gold-soft:rgba(217,179,108,.16);
+  --rose:#c88d9b;
+  --line:rgba(236,231,225,.10);
+  --card:rgba(255,255,255,.035);
+  --serif:"Noto Serif SC","Songti SC",Georgia,"Times New Roman",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden}
+body{
+  min-height:100vh;
+  min-height:100dvh;
+  background:
+    radial-gradient(1100px 700px at 12% -8%, rgba(120,86,140,.20), transparent 62%),
+    radial-gradient(900px 620px at 92% 8%, rgba(150,96,84,.16), transparent 60%),
+    radial-gradient(800px 800px at 50% 108%, rgba(60,52,88,.24), transparent 65%),
+    linear-gradient(180deg,#0a090c 0%,#0d0b12 45%,#09080b 100%);
+  background-attachment:fixed;
+}
+img{max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* 装饰性剪影层 */
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.ambient svg{position:absolute;stroke:var(--gold);fill:none;opacity:.07}
+.ambient .a1{width:190px;top:6%;left:-52px;transform:rotate(-14deg)}
+.ambient .a2{width:150px;top:38%;right:-40px;transform:rotate(18deg);opacity:.05}
+.ambient .a3{width:170px;bottom:6%;left:8%;transform:rotate(-8deg);opacity:.05}
+.ambient .a4{width:120px;top:64%;right:12%;opacity:.04}
+
+.shell{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:28px 22px 56px;
+  padding-left:max(22px, env(safe-area-inset-left));padding-right:max(22px, env(safe-area-inset-right))}
+
+/* ===================== 顶栏 ===================== */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:26px}
+.brand{display:flex;flex-direction:column;gap:5px}
+.brand b{font-family:var(--serif);font-size:13px;letter-spacing:.34em;font-weight:600;color:var(--gold);text-transform:uppercase}
+.brand span{font-size:11px;letter-spacing:.22em;color:var(--ink-faint);text-transform:uppercase}
+.counter{font-family:var(--serif);font-size:12px;letter-spacing:.18em;color:var(--ink-dim);white-space:nowrap}
+.counter b{color:var(--ink);font-weight:600;font-size:15px}
+.progress-track{position:relative;height:2px;background:rgba(255,255,255,.07);margin-bottom:30px;overflow:hidden;border-radius:2px}
+.progress-fill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:2px;
+  background:linear-gradient(90deg,rgba(217,179,108,.35),var(--gold) 60%,#f0d8a5);
+  transition:width .45s cubic-bezier(.22,.61,.36,1);
+  box-shadow:0 0 12px rgba(217,179,108,.45)}
+
+/* ===================== 视图切换 ===================== */
+.view{display:none}
+.view.active{display:block;animation:rise .6s cubic-bezier(.2,.7,.3,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ===================== 首页 ===================== */
+.hero{padding-top:14px;text-align:center}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:26px}
+.kicker i{display:block;width:26px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.kicker i:last-child{background:linear-gradient(90deg,var(--gold),transparent)}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(34px,9.4vw,52px);line-height:1.22;margin:0 0 6px;letter-spacing:.06em}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .en{font-family:var(--serif);font-size:11px;letter-spacing:.4em;color:var(--ink-faint);text-transform:uppercase;margin-bottom:30px}
+.hero .lede{max-width:520px;margin:0 auto;color:var(--ink-dim);font-size:14.5px;line-height:2;font-weight:300}
+.hero .lede b{color:var(--ink);font-weight:500}
+
+.axis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:34px 0 10px}
+.axis div{border:1px solid var(--line);border-radius:14px;padding:16px 6px 13px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));text-align:center}
+.axis div b{display:block;font-family:var(--serif);font-size:22px;letter-spacing:.08em;color:var(--ink);font-weight:600}
+.axis div span{display:block;font-size:10.5px;letter-spacing:.14em;color:var(--ink-faint);margin-top:6px;text-transform:uppercase}
+.axis div:nth-child(1) b{color:#e2c07a}
+.axis div:nth-child(2) b{color:#d69b8b}
+.axis div:nth-child(3) b{color:#a9a3d6}
+.axis div:nth-child(4) b{color:#8fb0a9}
+
+.cta-wrap{margin-top:34px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.btn-primary{
+  position:relative;overflow:hidden;width:100%;max-width:360px;padding:17px 26px;border-radius:999px;
+  background:linear-gradient(120deg,#e7c684,#cfa257 46%,#b98d45);
+  color:#191307;font-size:15px;font-weight:700;letter-spacing:.14em;
+  box-shadow:0 16px 40px -18px rgba(217,179,108,.75), inset 0 1px 0 rgba(255,255,255,.55);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.btn-primary::after{content:"";position:absolute;top:0;left:-60%;width:45%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-18deg);animation:sheen 4.4s ease-in-out infinite}
+@keyframes sheen{0%{left:-60%}55%{left:130%}100%{left:130%}}
+.btn-primary:active{transform:scale(.985)}
+.btn-primary:hover{box-shadow:0 20px 46px -18px rgba(217,179,108,.9), inset 0 1px 0 rgba(255,255,255,.6)}
+.btn-ghost{width:100%;max-width:360px;padding:15px 24px;border-radius:999px;border:1px solid var(--line);
+  color:var(--ink-dim);font-size:13.5px;letter-spacing:.1em;background:rgba(255,255,255,.02);transition:.25s}
+.btn-ghost:active{background:rgba(255,255,255,.06)}
+.meta-line{font-size:11.5px;letter-spacing:.16em;color:var(--ink-faint);text-transform:uppercase}
+.disclaimer{max-width:520px;margin:38px auto 0;padding:16px 18px;border:1px solid rgba(200,141,155,.18);border-radius:14px;
+  background:rgba(200,141,155,.05);font-size:11.8px;line-height:1.95;color:var(--ink-faint);text-align:left}
+.disclaimer b{color:var(--rose);font-weight:600;letter-spacing:.06em}
+
+/* ===================== 答题 ===================== */
+.q-stage{position:relative}
+.q-index{font-family:var(--serif);font-size:11px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.q-text{font-family:var(--serif);font-size:clamp(20px,5.6vw,26px);line-height:1.7;font-weight:600;letter-spacing:.02em;margin:0 0 26px;min-height:2.6em}
+.q-text .mark{color:var(--gold);opacity:.7;font-size:.8em;margin-right:.35em}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{
+  display:flex;align-items:flex-start;gap:13px;width:100%;text-align:left;
+  padding:16px 17px;border-radius:15px;border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+  color:var(--ink);font-size:14.6px;line-height:1.62;font-weight:300;letter-spacing:.01em;
+  transition:border-color .22s ease, background .22s ease, transform .18s ease;
+}
+.opt .tag{
+  flex:0 0 auto;width:24px;height:24px;border-radius:50%;border:1px solid rgba(217,179,108,.34);
+  display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:11.5px;color:var(--gold);
+  margin-top:1px;transition:.22s;
+}
+.opt:hover{border-color:rgba(217,179,108,.42);background:linear-gradient(180deg,rgba(217,179,108,.10),rgba(255,255,255,.02))}
+.opt:hover .tag{background:rgba(217,179,108,.16);border-color:rgba(217,179,108,.6)}
+.opt.picked{border-color:var(--gold);background:linear-gradient(120deg,rgba(217,179,108,.24),rgba(217,179,108,.09));transform:scale(.985)}
+.opt.picked .tag{background:var(--gold);color:#1a1408;border-color:var(--gold)}
+.q-hint{margin-top:22px;font-size:11px;letter-spacing:.18em;color:var(--ink-faint);text-align:center;text-transform:uppercase}
+.view-fade{animation:qIn .42s cubic-bezier(.2,.7,.3,1) both}
+@keyframes qIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+
+/* ===================== 结果 ===================== */
+.res-head{text-align:center;padding:8px 0 4px}
+.res-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
+  border:1px solid rgba(217,179,108,.3);background:rgba(217,179,108,.08);font-size:10.5px;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin-bottom:22px}
+.emblem{position:relative;width:132px;height:132px;margin:0 auto 18px;border-radius:50%;
+  border:1px solid rgba(217,179,108,.32);display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 38%,rgba(217,179,108,.16),rgba(217,179,108,0) 68%);
+  box-shadow:0 0 0 10px rgba(217,179,108,.045), 0 0 44px -12px rgba(217,179,108,.35);
+}
+.emblem::before{content:"";position:absolute;inset:-1px;border-radius:50%;
+  background:conic-gradient(from 180deg,rgba(217,179,108,.5),transparent 28%,transparent 62%,rgba(200,141,155,.42));
+  -webkit-mask:radial-gradient(circle,transparent 64%,#000 65%);mask:radial-gradient(circle,transparent 64%,#000 65%);opacity:.55}
+.emblem b{font-family:var(--serif);font-size:44px;letter-spacing:.06em;font-weight:600;color:var(--gold);position:relative}
+.res-name{font-family:var(--serif);font-size:clamp(28px,7.6vw,38px);font-weight:600;letter-spacing:.08em;margin:0 0 8px}
+.res-en{font-family:var(--serif);font-size:11px;letter-spacing:.34em;color:var(--ink-faint);text-transform:uppercase;margin-bottom:22px}
+.res-quote{max-width:520px;margin:0 auto 8px;font-family:var(--serif);font-size:16.5px;line-height:1.9;color:var(--ink);font-weight:400}
+.res-quote span{display:block;font-size:12px;font-family:var(--sans);letter-spacing:.14em;color:var(--ink-faint);margin-top:10px}
+
+.panel{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  padding:20px 19px;margin-top:14px;backdrop-filter:blur(6px)}
+.panel h3{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-size:13px;letter-spacing:.2em;color:var(--gold);
+  font-weight:600;margin:0 0 13px;text-transform:uppercase}
+.panel h3 i{display:block;width:3px;height:12px;background:var(--gold);opacity:.7;border-radius:2px}
+.panel p{margin:0;font-size:13.8px;line-height:2.05;color:var(--ink-dim);font-weight:300}
+.panel p b{color:var(--ink);font-weight:500}
+.panel ul{margin:0;padding-left:0;list-style:none}
+.panel li{position:relative;padding-left:17px;font-size:13.8px;line-height:1.95;color:var(--ink-dim);margin-bottom:8px;font-weight:300}
+.panel li::before{content:"";position:absolute;left:0;top:11px;width:6px;height:1.5px;background:var(--gold);opacity:.65}
+.panel li b{color:var(--ink);font-weight:500}
+.panel.egg{border-color:rgba(200,141,155,.24);background:linear-gradient(180deg,rgba(200,141,155,.09),rgba(255,255,255,.012))}
+.panel.egg h3{color:var(--rose)}
+
+.spectrum{margin-top:22px}
+.spectrum-note{margin-top:12px;font-size:10px;letter-spacing:.14em;color:var(--ink-faint);text-align:center}
+.spectrum-title{font-size:10.5px;letter-spacing:.24em;color:var(--ink-faint);text-transform:uppercase;margin-bottom:14px;text-align:center}
+.bars{display:flex;flex-direction:column;gap:11px}
+.bar-row{display:grid;grid-template-columns:44px 1fr 42px;align-items:center;gap:10px}
+.bar-row .k{font-family:var(--serif);font-size:12px;letter-spacing:.16em;color:var(--ink-dim)}
+.bar-track{height:6px;border-radius:6px;background:rgba(255,255,255,.06);overflow:hidden}
+.bar-fill{height:100%;width:0;border-radius:6px;transition:width 1.05s cubic-bezier(.2,.7,.3,1)}
+.bar-row .v{font-family:var(--serif);font-size:11px;color:var(--ink-faint);text-align:right}
+.bar-row.top .k{color:var(--gold)}
+.bar-row.top .v{color:var(--gold)}
+
+.mix{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;margin-top:14px;
+  border:1px dashed rgba(217,179,108,.26);background:rgba(217,179,108,.05)}
+.mix span{font-size:11px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;flex:0 0 auto;white-space:nowrap}
+.mix p{margin:0;font-size:12.8px;line-height:1.7;color:var(--ink-dim)}
+@media (max-width:560px){
+  .mix{flex-direction:column;align-items:flex-start;gap:7px}
+}
+
+.share-card{margin-top:26px;padding:26px 22px 20px;border-radius:20px;border:1px solid rgba(217,179,108,.22);
+  background:
+    radial-gradient(600px 260px at 50% -10%,rgba(217,179,108,.13),transparent 70%),
+    linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+  text-align:center;box-shadow:0 30px 60px -40px rgba(0,0,0,.9)}
+.share-card .sc-brand{font-family:var(--serif);font-size:10px;letter-spacing:.32em;color:var(--ink-faint);text-transform:uppercase;margin-bottom:16px}
+.share-card .sc-name{font-family:var(--serif);font-size:26px;letter-spacing:.12em;font-weight:600;margin:0 0 10px;color:var(--gold)}
+.share-card .sc-line{font-family:var(--serif);font-size:14px;line-height:1.9;color:var(--ink);margin:0 auto 18px;max-width:320px}
+.share-card .sc-foot{font-size:10.5px;letter-spacing:.2em;color:var(--ink-faint);text-transform:uppercase}
+
+.actions{display:flex;flex-direction:column;gap:11px;margin-top:22px}
+.actions .row{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.btn-mini{padding:15px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);
+  font-size:13px;letter-spacing:.08em;color:var(--ink-dim);transition:.22s}
+.btn-mini:hover{border-color:rgba(217,179,108,.4);color:var(--ink)}
+.btn-mini:active{transform:scale(.98)}
+.btn-mini:disabled{opacity:.32;cursor:not-allowed;pointer-events:none}
+.toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,14px);opacity:0;pointer-events:none;
+  padding:11px 18px;border-radius:999px;background:rgba(24,20,28,.94);border:1px solid rgba(217,179,108,.3);
+  font-size:12.5px;color:var(--ink);letter-spacing:.06em;transition:.3s;z-index:99;backdrop-filter:blur(8px)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ===================== 年龄确认 ===================== */
+.consent{display:flex;align-items:center;gap:10px;max-width:360px;width:100%;cursor:pointer;text-align:left;
+  padding:12px 15px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.02);
+  font-size:12px;line-height:1.6;color:var(--ink-faint);transition:.22s}
+.consent input{position:absolute;opacity:0;width:0;height:0}
+.consent .box{flex:0 0 auto;width:16px;height:16px;border-radius:4px;border:1px solid rgba(217,179,108,.4);
+  position:relative;transition:.2s;background:rgba(255,255,255,.02)}
+.consent .box::after{content:"";position:absolute;left:4.5px;top:1.5px;width:5px;height:9px;
+  border-right:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);transform:rotate(40deg) scale(0);transition:.18s}
+.consent input:checked ~ .box{background:rgba(217,179,108,.14);border-color:var(--gold)}
+.consent input:checked ~ .box::after{transform:rotate(40deg) scale(1)}
+.consent input:checked ~ span{color:var(--ink-dim)}
+.consent:focus-within{border-color:rgba(217,179,108,.42)}
+.btn-primary:disabled{opacity:.42;cursor:not-allowed;filter:saturate(.5)}
+.btn-primary:disabled::after{animation:none}
+
+/* ===================== 题目分类 ===================== */
+.q-cat{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;letter-spacing:.2em;color:var(--ink-faint);
+  text-transform:uppercase;margin:-6px 0 14px}
+.q-cat::before{content:"";width:14px;height:1px;background:rgba(217,179,108,.5)}
+
+/* ===================== 分享海报 ===================== */
+.poster-mask{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;
+  background:rgba(6,5,9,.93);backdrop-filter:blur(10px);padding:18px}
+.poster-mask.on{display:flex;animation:fadeIn .3s ease both}
+.poster{position:relative;width:min(88vw,380px);aspect-ratio:3/4;border-radius:20px;overflow:hidden;
+  border:1px solid rgba(217,179,108,.28);display:flex;flex-direction:column;justify-content:space-between;
+  padding:24px 20px 18px;text-align:center;
+  background:
+    radial-gradient(420px 300px at 50% -6%,rgba(217,179,108,.28),transparent 68%),
+    radial-gradient(320px 260px at 50% 112%,rgba(160,110,130,.22),transparent 70%),
+    linear-gradient(180deg,#131019,#0a090c 60%,#08070a)}
+.poster::before{content:"";position:absolute;inset:9px;border:1px solid rgba(217,179,108,.14);border-radius:14px;pointer-events:none}
+.poster .p-brand{font-family:var(--serif);font-size:9.5px;letter-spacing:.34em;color:var(--ink-faint);text-transform:uppercase}
+.poster .p-letter{font-family:var(--serif);font-size:clamp(38px,13vw,56px);letter-spacing:.1em;color:var(--gold);margin:15px 0 4px;line-height:1}
+.poster .p-name{font-family:var(--serif);font-size:22px;letter-spacing:.12em;font-weight:600;margin:0 0 6px}
+.poster .p-en{font-family:var(--serif);font-size:9px;letter-spacing:.26em;color:var(--ink-faint);text-transform:uppercase;margin-bottom:14px}
+.poster .p-quote{font-family:var(--serif);font-size:13.5px;line-height:1.85;color:var(--ink-dim);margin:0 auto;max-width:260px}
+.poster .p-tag{display:inline-flex;gap:8px;align-items:center;margin-top:14px;padding:5px 12px;border-radius:999px;
+  border:1px solid rgba(217,179,108,.22);background:rgba(217,179,108,.07);font-size:9.5px;letter-spacing:.16em;color:var(--gold)}
+.poster .p-bars{display:flex;flex-direction:column;gap:7px;margin:18px 0 0}
+.poster .p-bar{display:grid;grid-template-columns:32px 1fr 28px;gap:7px;align-items:center}
+.poster .p-bar .k{font-family:var(--serif);font-size:9.5px;letter-spacing:.1em;color:var(--ink-dim);text-align:left}
+.poster .p-bar .t{height:3px;border-radius:3px;background:rgba(255,255,255,.09);overflow:hidden}
+.poster .p-bar .f{height:100%;border-radius:3px}
+.poster .p-bar .v{font-size:8.5px;color:var(--ink-faint);text-align:right}
+.poster .p-kw{display:flex;justify-content:center;gap:8px;margin-top:24px;flex-wrap:wrap}
+.poster .p-kw span{font-family:var(--serif);font-size:10px;letter-spacing:.14em;color:var(--ink-dim);padding:5px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.12)}
+.poster .p-cta{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:34px}
+.poster .p-cta i{display:block;width:34px;height:1px;background:linear-gradient(90deg,transparent,rgba(217,179,108,.5))}
+.poster .p-cta i:last-child{background:linear-gradient(90deg,rgba(217,179,108,.5),transparent)}
+.poster .p-cta span{font-size:9.5px;letter-spacing:.3em;color:rgba(217,179,108,.7)}
+.poster .p-foot{margin-top:16px;font-size:9px;letter-spacing:.2em;color:var(--ink-faint);text-transform:uppercase}
+.poster-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.16);color:var(--ink-dim);font-size:15px;line-height:1;z-index:3}
+.poster-tip{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom));text-align:center;
+  font-size:11px;letter-spacing:.14em;color:var(--ink-faint);z-index:61;pointer-events:none}
+
+@media (max-width:380px){
+  .opt{font-size:13.6px;padding:14px 14px;gap:11px}
+  .axis div b{font-size:19px}
+  .emblem{width:112px;height:112px}
+  .emblem b{font-size:38px}
+}
+@media (min-width:760px){
+  .shell{padding-top:44px}
+  .opt{padding:17px 20px}
+}
+
+/* ================= 付费门禁 ================= */
+body.locked{overflow:hidden;height:100vh;height:100dvh}
+body.locked .shell,body.locked .ambient{display:none!important}
+#gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:26px;
+  background:radial-gradient(900px 620px at 50% 14%,rgba(120,86,140,.24),transparent 64%),
+             linear-gradient(160deg,#0c0910,#1a1020 55%,#07050b)}
+#gate .gbox{width:min(92vw,460px);text-align:center;padding:44px 34px 34px;border:1px solid rgba(217,179,108,.16);border-radius:18px;background:rgba(12,9,16,.42);animation:gIn .55s ease both}
+@keyframes gIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.g-kicker{font-size:10px;letter-spacing:.3em;color:var(--ink-faint);text-transform:uppercase}
+.g-title{font-family:var(--serif);font-size:27px;font-weight:500;letter-spacing:.08em;margin:16px 0 14px;color:var(--gold)}
+.g-desc{font-size:13px;line-height:2;color:var(--ink-dim);margin:0 0 28px}
+.g-desc b{color:var(--ink);font-weight:500;letter-spacing:.04em}
+.g-input{display:block;width:100%;margin:0 auto 12px;padding:14px 16px;text-align:center;
+  background:rgba(255,255,255,.045);border:1px solid rgba(217,179,108,.28);border-radius:10px;
+  color:var(--ink);font-family:var(--sans);font-size:15px;letter-spacing:.16em;outline:none;
+  transition:border-color .25s,background .25s}
+.g-input::placeholder{color:#5d5763;letter-spacing:.1em;font-size:12px}
+.g-input:focus{border-color:rgba(217,179,108,.7);background:rgba(255,255,255,.075)}
+.g-nick{letter-spacing:.06em;font-size:13px;padding:11px 16px}
+.g-nick::placeholder{letter-spacing:.04em}
+.g-btn{width:100%;margin-top:10px;padding:15px;border:none;border-radius:10px;cursor:pointer;
+  font-family:var(--sans);font-size:14px;letter-spacing:.24em;color:#1a1013;
+  background:linear-gradient(135deg,#e8d5ab,#d9b36c 55%,#b98f47);
+  transition:transform .2s,filter .2s}
+.g-btn:active{transform:scale(.98);filter:brightness(.95)}
+.g-err{min-height:18px;margin-top:14px;font-size:11.5px;letter-spacing:.08em;color:var(--rose)}
+.g-foot{margin-top:26px;font-size:10px;letter-spacing:.18em;color:#4f4a55;text-transform:none}
+#licTag{position:fixed;left:0;right:0;bottom:calc(4px + env(safe-area-inset-bottom));z-index:40;
+  text-align:center;font-size:9px;letter-spacing:.14em;color:rgba(236,231,225,.22);pointer-events:none}
+
+</style>
+</head>
+<body class="locked">
+
+<!-- ================= 付费门禁 ================= -->
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gTitle">
+  <div class="gbox">
+    <div class="g-kicker">Access · 已购买</div>
+    <h2 class="g-title" id="gTitle">输入你的访问码</h2>
+    <p class="g-desc">付款后会收到一组 16 位访问码，形如 <b>RQ-XXXX-XXXX-XXXX</b>。<br>填一次即可，这台设备会自动记住。</p>
+    <input class="g-input" id="gateCode" type="text" inputmode="latin" autocomplete="off" spellcheck="false"
+           placeholder="RQ-XXXX-XXXX-XXXX" maxlength="24">
+    <input class="g-input g-nick" id="gateNick" type="text" maxlength="16"
+           placeholder="你的昵称（用作授权水印，可留空）">
+    <button class="g-btn" id="gateBtn">解 &nbsp; 锁</button>
+    <div class="g-err" id="gateErr"></div>
+    <div class="g-foot">18+ · 仅供购买者本人使用 · 请勿转发文件</div>
+  </div>
+</div>
+
+
+<!-- ===== 背景剪影（纯装饰） ===== -->
+<div class="ambient" aria-hidden="true">
+  <!-- 钥匙 -->
+  <svg class="a1" viewBox="0 0 100 160" stroke-width="3">
+    <circle cx="50" cy="34" r="20"/><path d="M50 54 V148 M50 118 h18 M50 134 h13"/>
+  </svg>
+  <!-- 缎带 -->
+  <svg class="a2" viewBox="0 0 120 90" stroke-width="3">
+    <path d="M60 45 C30 18 8 26 12 45 C16 64 40 62 60 45 C80 62 104 64 108 45 C112 26 90 18 60 45"/>
+    <path d="M60 45 V84"/>
+  </svg>
+  <!-- 蜡烛 -->
+  <svg class="a3" viewBox="0 0 80 150" stroke-width="3">
+    <ellipse cx="40" cy="60" rx="20" ry="7"/><path d="M20 60 V132 C20 144 60 144 60 132 V60"/>
+    <path d="M40 44 C34 34 34 24 40 12 C46 24 46 34 40 44"/>
+  </svg>
+  <!-- 锁扣 -->
+  <svg class="a4" viewBox="0 0 120 70" stroke-width="3">
+    <rect x="8" y="26" width="44" height="34" rx="6"/><rect x="68" y="26" width="44" height="34" rx="6"/>
+    <path d="M52 40 C58 34 62 34 68 40"/>
+  </svg>
+</div>
+
+<div class="shell">
+  <!-- 顶栏 -->
+  <div class="topbar">
+    <div class="brand">
+      <b>ATTRIBUTE QUIZ</b>
+      <span>BDSM · 人格取向探索</span>
+    </div>
+    <div class="counter" id="counter" style="visibility:hidden"><b id="qNow">1</b> / 50</div>
+  </div>
+  <div class="progress-track" id="track" style="visibility:hidden"><div class="progress-fill" id="fill"></div></div>
+
+  <!-- ===== 视图：首页 ===== -->
+  <section class="view active" id="view-intro">
+    <div class="hero">
+      <div class="kicker"><i></i><span>Fifty Quiet Questions</span><i></i></div>
+      <h1>你是<em>哪一种</em><br>掌控的人</h1>
+      <div class="en">A Quiet Quiz of Power, Trust &amp; Endurance</div>
+      <p class="lede">50 道生活化的选择题，不谈姿态，只谈<b>你默认怎么处理权力、信任和强度</b>。没有正确答案，只有你更习惯的那一边。</p>
+
+      <div class="axis">
+        <div><b>Dom</b><span>掌控</span></div>
+        <div><b>S</b><span>施与</span></div>
+        <div><b>Sub</b><span>交付</span></div>
+        <div><b>M</b><span>承重</span></div>
+      </div>
+
+      <div class="cta-wrap">
+        <label class="consent" id="consentRow">
+          <input type="checkbox" id="adultOk">
+          <span class="box" aria-hidden="true"></span>
+          <span>我已年满 18 岁，理解本测试仅作自我观察与娱乐</span>
+        </label>
+        <button class="btn-primary" id="startBtn" disabled>开 始 测 试</button>
+        <div class="meta-line">50 题 · 约 6 分钟 · 无需注册</div>
+      </div>
+
+      <div class="disclaimer">
+        <b>阅读前：</b>本测试面向成年人，仅作自我观察与娱乐之用，<b>不构成任何心理或医学诊断</b>，也不涉及具体行为指导。所有题目均为生活情境抽象，请按第一直觉选择，不必纠结"应该"怎样。
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 视图：答题 ===== -->
+  <section class="view" id="view-quiz">
+    <div class="q-stage">
+      <div class="q-index" id="qIndex">QUESTION 01</div>
+      <div class="q-cat" id="qCat">日常习惯</div>
+      <div id="qBody"></div>
+      <div class="q-hint">凭第一反应作答 · 中途可返回上一题</div>
+      <div style="margin-top:16px;display:flex;justify-content:center">
+        <button class="btn-mini" id="backBtn" style="padding:11px 22px;font-size:12px;letter-spacing:.14em">返回上一题</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 视图：结果 ===== -->
+  <section class="view" id="view-result">
+    <div class="res-head">
+      <div class="res-badge" id="resBadge">RESULT</div>
+      <div class="emblem"><b id="resLetter">D</b></div>
+      <h2 class="res-name" id="resName">—</h2>
+      <div class="res-en" id="resEn">—</div>
+      <p class="res-quote" id="resQuote">—</p>
+    </div>
+
+    <div class="spectrum">
+      <div class="spectrum-title">你的四维光谱</div>
+      <div class="bars" id="bars"></div>
+      <div class="spectrum-note">四维加权计分 · 归一化为构成比</div>
+    </div>
+    <div id="mixBox"></div>
+
+    <div class="panel">
+      <h3><i></i>性格特点</h3>
+      <ul id="resTraits"></ul>
+    </div>
+    <div class="panel">
+      <h3><i></i>你的开关</h3>
+      <ul id="resSwitches"></ul>
+    </div>
+    <div class="panel">
+      <h3><i></i>为什么是你</h3>
+      <p id="resReason"></p>
+    </div>
+    <div class="panel">
+      <h3><i></i>隐藏优势</h3>
+      <p id="resStrength"></p>
+    </div>
+    <div class="panel egg">
+      <h3><i></i>彩蛋</h3>
+      <p id="resEgg"></p>
+    </div>
+
+    <div class="share-card" id="shareCard">
+      <div class="sc-brand">ATTRIBUTE QUIZ · 2026</div>
+      <div class="sc-name" id="scName">—</div>
+      <div class="sc-line" id="scLine">—</div>
+      <div class="bars" id="scBars" style="margin-bottom:16px"></div>
+      <div class="sc-foot">50 QUESTIONS · ONE ANSWER</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" id="posterBtn" style="max-width:none">生 成 分 享 卡</button>
+      <div class="row">
+        <button class="btn-mini" id="copyBtn">复制分享文案</button>
+        <button class="btn-mini" id="againBtn">再测一次</button>
+      </div>
+      <button class="btn-ghost" id="homeBtn" style="max-width:none">回到首页</button>
+    </div>
+  </section>
+</div>
+
+<!-- ===== 分享海报（供截图） ===== -->
+<div class="poster-mask" id="posterMask">
+  <div class="poster" id="poster">
+    <div>
+      <div class="p-brand">ATTRIBUTE QUIZ · BDSM</div>
+      <div class="p-letter" id="pLetter">D</div>
+      <div class="p-name" id="pName">—</div>
+      <div class="p-en" id="pEn">—</div>
+      <div class="p-quote" id="pQuote">—</div>
+      <div class="p-tag" id="pTag">—</div>
+      <div class="p-bars" id="pBars"></div>
+      <div class="p-kw" id="pKw"></div>
+      <div class="p-cta"><i></i><span>你 在 哪 一 侧</span><i></i></div>
+    </div>
+    <div>
+      <div class="p-foot">50 QUESTIONS · ONE ANSWER</div>
+      <div class="p-foot" style="margin-top:6px;letter-spacing:.12em">仅供自我观察 · 不具备诊断意义</div>
+    </div>
+    <button class="poster-close" id="posterClose" aria-label="关闭">✕</button>
+  </div>
+</div>
+<div class="poster-tip" id="posterTip" style="display:none">长按海报或直接截图保存</div>
+
+<div class="toast" id="toast">已复制</div>
+
+<script>
+/* ============================================================
+   数据层：50 题 × 选项权重
+   维度键：dom 掌控 / sad 施与 / sub 交付 / mas 承重
+   ============================================================ */
+var DIMS = ['dom','sad','sub','mas'];
+var DIM_LABEL = {dom:'Dom', sad:'S', sub:'Sub', mas:'M'};
+var DIM_FULL  = {dom:'掌控倾向', sad:'施与倾向', sub:'交付倾向', mas:'承重倾向'};
+var DIM_COLOR = {dom:'#d9b36c', sad:'#c88d9b', sub:'#a9a3d6', mas:'#8fb0a9'};
+
+var QUESTIONS = [
+  {q:'周五晚上突然空出一整晚，他在电话那头问：今晚想怎么过？', o:[
+    {t:'地点、时间、几点结束，你一句话就定了', w:{dom:2}},
+    {t:'「你定」——然后你开始想今晚该穿哪一件', w:{sub:2}},
+    {t:'你只透露一半，剩下的让他猜一整晚', w:{dom:1,sad:1}},
+    {t:'谁也别约，你想一个人慢慢耗到深夜', w:{sub:1,mas:1}}
+  ]},
+  {q:'排队时，有人的手臂直接插到你前面：', o:[
+    {t:'你轻声制止，语气很软，但没有商量的余地', w:{dom:2,sad:1}},
+    {t:'你往后让了半步，心里闷了一下', w:{sub:2,mas:1}},
+    {t:'你笑着提醒一句，还替他留了个台阶', w:{dom:1}},
+    {t:'你不说话，只用眼神把他钉回队尾', w:{sad:2,dom:1}}
+  ]},
+  {q:'他搬家，叫你去搭把手，衬衫领口开了两颗扣：', o:[
+    {t:'你先问清楼层和电梯，然后准时站在他门口', w:{dom:2}},
+    {t:'「你说几点就几点」，你全程听他指挥', w:{sub:2,mas:1}},
+    {t:'你一边搬一边重新规划箱子怎么码', w:{sad:1,dom:1}},
+    {t:'你专挑最重的那几趟，喘着也比他稳', w:{mas:2}}
+  ]},
+  {q:'衣柜里，最藏起来的那一格是：', o:[
+    {t:'分区清楚，连「只穿给他看」那几件都归好类', w:{dom:2}},
+    {t:'常穿的就那几件，别的懒得动', w:{sub:1}},
+    {t:'有几件只在该出现的场合才拿出来，保养很仔细', w:{sad:2}},
+    {t:'越旧越软越好穿，起球了也舍不得换', w:{mas:1,sub:1}}
+  ]},
+  {q:'电影里最容易让你坐直的桥段：', o:[
+    {t:'谈判、布局，一个人把整个场子攥在手里', w:{dom:2}},
+    {t:'被看穿了，还是被抱住了', w:{sub:2}},
+    {t:'审讯、逼问，空气一寸一寸收紧', w:{sad:2}},
+    {t:'被反复折磨，最后还能站起来', w:{mas:2}}
+  ]},
+  {q:'半夜手机亮了一下，是他：', o:[
+    {t:'通知全关，什么时候回由你决定', w:{dom:2}},
+    {t:'响一下就看，怕漏掉他的消息', w:{sub:2}},
+    {t:'他先撩你，你就把话往上再添一把', w:{sad:1}},
+    {t:'常年静音，睡不着也不回', w:{sub:1,mas:1}}
+  ]},
+  {q:'健身房里，他的手扶上你的腰，说「这里要收紧」：', o:[
+    {t:'你自己调，顺便告诉他该按哪个角度', w:{dom:2}},
+    {t:'你说好，让他带着你做完这一组', w:{sub:2}},
+    {t:'你故意做错一点，看他会不会再靠近', w:{sad:1,dom:1}},
+    {t:'越酸越上瘾，第二天起不来还有点爽', w:{mas:2}}
+  ]},
+  {q:'刚认识一个人，他的眼神在你身上多停了两秒：', o:[
+    {t:'你先观察一阵，确认靠谱才肯往下走', w:{dom:2}},
+    {t:'你很快把自己的事说出去，希望被懂', w:{sub:2}},
+    {t:'你用玩笑去碰他的边界，看他怎么接', w:{sad:2}},
+    {t:'他怎么调侃，你都接得住', w:{mas:2}}
+  ]},
+  {q:'连着加班到深夜，他最该说的是：', o:[
+    {t:'把明天的任务重排一遍，让局面回到你手里', w:{dom:2}},
+    {t:'「辛苦了，别撑了，过来」', w:{sub:2}},
+    {t:'越累越要做完，你享受压榨自己那口气', w:{sad:1,mas:2}},
+    {t:'安静熬完，不需要谁安慰', w:{mas:1,sub:1}}
+  ]},
+  {q:'两个人在家点外卖，沙发上只够一个半人的位置：', o:[
+    {t:'固定那几家那几样，连先吃什么都有顺序', w:{dom:1,sub:1}},
+    {t:'他点什么你吃什么，连辣度都跟着', w:{sub:2}},
+    {t:'你专点最辣的，看他能陪你吃到哪一步', w:{sad:1,mas:1}},
+    {t:'只挑评分最高的，你不想扫兴', w:{dom:1}}
+  ]},
+  {q:'一桌人讨论去哪吃，僵在那儿，他看了你一眼：', o:[
+    {t:'「就这家，现在走」，一句话结束讨论', w:{dom:3}},
+    {t:'「你们定，我都吃」', w:{sub:2}},
+    {t:'故意留两个互相看不上的选项，看他们吵', w:{sad:2}},
+    {t:'都行，但干等太久你会烦', w:{sub:1,mas:1}}
+  ]},
+  {q:'他忽然凑近，说「你今天有点不一样」：', o:[
+    {t:'你平静接住，心里默默记了一笔', w:{dom:1}},
+    {t:'有点不好意思，但很想他再多说两句', w:{sub:2,mas:1}},
+    {t:'你把话题绕回他身上，看他怎么接', w:{sad:1}},
+    {t:'你不太会接，只低头笑了一下', w:{mas:1,sub:1}}
+  ]},
+  {q:'你最受不了哪一种人：', o:[
+    {t:'做事没章法、一临场就掉链子', w:{dom:2}},
+    {t:'说话很硬，一句都不让别人插', w:{sub:2}},
+    {t:'怎么撩都没反应，一点脾气都没有', w:{sad:2}},
+    {t:'一点苦都吃不了，动不动就喊停', w:{mas:2}}
+  ]},
+  {q:'聚会散场，只剩你们两个还在门口：', o:[
+    {t:'「我送你」，然后你走在前面，他跟着', w:{dom:2}},
+    {t:'「你送我」，然后你等他开口', w:{sub:2}},
+    {t:'你偏要说「那你敢不敢再待一会儿」', w:{sad:1}},
+    {t:'你站着没动，等他先决定去哪', w:{mas:2}}
+  ]},
+  {q:'他让你帮忙拿个主意，人靠得很近：', o:[
+    {t:'你直接给结论，还顺手说清为什么', w:{dom:2}},
+    {t:'「你想怎样都行，我陪你」', w:{sub:2}},
+    {t:'你给他两个都很刺激的选项，让他自己挑', w:{sad:2}},
+    {t:'其实你更希望有人替你做决定', w:{sub:1,mas:1}}
+  ]},
+  {q:'被当面撂下一句重话：', o:[
+    {t:'先问依据，站得住就当场反驳', w:{dom:2}},
+    {t:'先道歉，回头自己难受很久', w:{sub:2,mas:1}},
+    {t:'表面接受，暗地里把话拆开看', w:{sad:1}},
+    {t:'不反驳，先忍着', w:{mas:2}}
+  ]},
+  {q:'一段亲密关系里，你更像：', o:[
+    {t:'定节奏、定分寸的那个人', w:{dom:2}},
+    {t:'等对方安排、被照顾的那个人', w:{sub:2}},
+    {t:'把气氛推到临界点的那个人', w:{sad:2}},
+    {t:'被推到临界点的那个人', w:{mas:2}}
+  ]},
+  {q:'有人在你面前哭了：', o:[
+    {t:'先给方案，告诉他下一步做什么', w:{dom:1}},
+    {t:'陪着他，让他靠一会儿', w:{sub:2}},
+    {t:'想知道他能哭到什么程度', w:{sad:2}},
+    {t:'你也想哭，共情到快撑不住', w:{sub:1,mas:1}}
+  ]},
+  {q:'你对「规矩」的真实态度：', o:[
+    {t:'规矩由你定，但你会讲清为什么', w:{dom:2}},
+    {t:'有清楚的规矩，你反而安心', w:{sub:2,mas:1}},
+    {t:'规矩就是用来一点点试探的', w:{sad:2}},
+    {t:'再严你也能忍，忍完还挺爽', w:{mas:1,sub:1}}
+  ]},
+  {q:'合影时他站在你身后，手搭在你腰侧：', o:[
+    {t:'你反手把他的手按稳，顺便调整站位', w:{dom:2}},
+    {t:'他摆哪儿你就哪儿，站得笔直', w:{sub:2}},
+    {t:'你抓他没防备那一瞬，故意逗他', w:{sad:1}},
+    {t:'你僵了一下，但没躲开', w:{mas:1,sub:1}}
+  ]},
+  {q:'焦虑上来的时候，你：', o:[
+    {t:'列清单，先把能控的部分处理掉', w:{dom:2}},
+    {t:'想找人抱着，什么都别让你想', w:{sub:2}},
+    {t:'故意把焦虑放大，熬到筋疲力尽才睡', w:{sad:1,mas:2}},
+    {t:'硬扛，不说', w:{mas:1}}
+  ]},
+  {q:'关于「疼」这件事：', o:[
+    {t:'先评估风险，再决定要不要继续', w:{dom:2}},
+    {t:'疼了就停，不留下后患', w:{sub:1}},
+    {t:'你会留意别人忍痛的样子，那很有意思', w:{sad:2}},
+    {t:'小伤而已，还能继续', w:{mas:2}}
+  ]},
+  {q:'你更怕哪一种处境：', o:[
+    {t:'失控——事情不在你手里', w:{dom:2}},
+    {t:'被抛下——突然没人管你了', w:{sub:2}},
+    {t:'无聊——一点张力都没有', w:{sad:2}},
+    {t:'被看穿——其实你快撑不住了', w:{mas:2}}
+  ]},
+  {q:'他贴着你耳朵说「你今天真靠谱」：', o:[
+    {t:'你受着，还顺手把下一件事也安排了', w:{dom:2}},
+    {t:'你有点心虚，也希望有人来照顾你', w:{sub:2,mas:1}},
+    {t:'你更想被夸「有意思、很会玩」', w:{sad:1}},
+    {t:'「能忍」两个字最受用', w:{mas:2}}
+  ]},
+  {q:'深夜最容易把你带到哪里：', o:[
+    {t:'复盘白天的对话，想哪里该更主动', w:{dom:1}},
+    {t:'翻聊天记录，等一个回复', w:{sub:2}},
+    {t:'找点带危险感的东西看或听', w:{sad:1}},
+    {t:'把自己累到倒头就睡', w:{mas:2}}
+  ]},
+  {q:'和他较劲，他离你很近却一句话不说：', o:[
+    {t:'你先开口，把话挑明', w:{dom:2}},
+    {t:'你一直等他先说话', w:{sub:2}},
+    {t:'你享受这种无声的对峙', w:{sad:2}},
+    {t:'憋着，越憋越觉得自己在承受', w:{mas:1,sub:1}}
+  ]},
+  {q:'他发来一条明显在撩你的消息：', o:[
+    {t:'回一条更有分量的，把场子收回来', w:{dom:2}},
+    {t:'先不回，怕回错', w:{sub:1,mas:1}},
+    {t:'顺着他的话往上加码', w:{sad:2}},
+    {t:'有点兴奋，想看他还能推多远', w:{mas:2}}
+  ]},
+  {q:'事情完全脱离计划：', o:[
+    {t:'当场重排，先止血', w:{dom:2}},
+    {t:'会慌，希望有人直接给你指令', w:{sub:2,mas:1}},
+    {t:'反而兴奋，干脆不按计划走', w:{sad:1}},
+    {t:'就这么受着，反正也改不了', w:{mas:1}}
+  ]},
+  {q:'你更享受哪一种「被需要」：', o:[
+    {t:'他离不开你的判断', w:{dom:2}},
+    {t:'有人愿意被你照顾到底', w:{dom:1,sub:1}},
+    {t:'他在你手里失控', w:{sad:2}},
+    {t:'你被需要到没有退路', w:{mas:1,sub:1}}
+  ]},
+  {q:'你对「界限」的看法：', o:[
+    {t:'界限要清楚，而且由你来划', w:{dom:2}},
+    {t:'有清楚的界限，你才敢放开', w:{sub:2}},
+    {t:'界限就是用来一点点试探的', w:{sad:2}},
+    {t:'边界被推的时候，你反而更清醒', w:{mas:2}}
+  ]},
+  {q:'他的手从你后颈慢慢滑到肩胛：', o:[
+    {t:'反手扣住他的手腕，把手换了个方向', w:{dom:2}},
+    {t:'同样一条路线还回去，指尖压得更重', w:{sad:2}},
+    {t:'整个人软下来，等他的下一步', w:{sub:2}},
+    {t:'屏住呼吸，心里希望他别停', w:{mas:2}}
+  ]},
+  {q:'他贴着你耳朵低声说「今晚听我的」：', o:[
+    {t:'这句话轮不到他——你原样还回去', w:{dom:2}},
+    {t:'偏偏反问一句，看他敢不敢再说一遍', w:{sad:2}},
+    {t:'安静下来，把接下来的事交给他', w:{sub:2}},
+    {t:'耳朵先红了，但没打算拒绝', w:{mas:2}}
+  ]},
+  {q:'灯只留一盏，他开始解第一颗扣子：', o:[
+    {t:'坐在对面，等他自己把剩下的解决掉', w:{dom:2}},
+    {t:'走过去替他解开，然后退开半步', w:{sad:2}},
+    {t:'伸手帮他，手有点抖', w:{sub:2}},
+    {t:'不敢直视，只听见自己的心跳', w:{mas:2}}
+  ]},
+  {q:'比起「被碰到哪里」，你更在意：', o:[
+    {t:'他能不能碰，要你点头', w:{dom:2}},
+    {t:'你碰他的时候，他有没有躲', w:{sad:2}},
+    {t:'他碰到哪里，你就跟着热到哪里', w:{sub:2}},
+    {t:'后颈和耳后被碰到的那一下，最守不住', w:{mas:2}}
+  ]},
+  {q:'有人要你跪下来：', o:[
+    {t:'让他跪，然后慢慢踱到他面前', w:{dom:2}},
+    {t:'跪下去，但下巴抬着', w:{sad:2}},
+    {t:'跪得很快，心里甚至有点期待', w:{sub:2}},
+    {t:'膝盖落地的那一下，反而踏实了', w:{mas:2}}
+  ]},
+  {q:'他用很轻的声音说了你一个「乖」字：', o:[
+    {t:'这个字你只说给真的听话的人', w:{dom:2}},
+    {t:'故意不乖，看他还能不能笑着再说一遍', w:{sad:2}},
+    {t:'立刻照做，连呼吸都放轻', w:{sub:2}},
+    {t:'低下头，耳根发烫', w:{mas:2}}
+  ]},
+  {q:'眼睛被遮住之后，你最清楚的是：', o:[
+    {t:'你在数他的呼吸，算第几秒开始乱', w:{dom:2}},
+    {t:'伸手试探，想看他会不会躲开', w:{sad:2}},
+    {t:'把全部注意力交到他手上', w:{sub:2}},
+    {t:'黑暗里，每一次触碰都被放大', w:{mas:2}}
+  ]},
+  {q:'关于「留下痕迹」：', o:[
+    {t:'挑一个只有你们两个人知道的位置', w:{dom:2}},
+    {t:'挑一个领口遮不住的位置', w:{sad:2}},
+    {t:'求他轻一点，但没有真的拦', w:{sub:2}},
+    {t:'第二天反复照镜子，确认它还在', w:{mas:2}}
+  ]},
+  {q:'关于「罚」，你真正在意的是：', o:[
+    {t:'规矩是你定的，罚也是', w:{dom:2}},
+    {t:'更享受他说「求你了」的那一刻', w:{sad:2}},
+    {t:'怕的不是罚，是被晾在一边不理', w:{sub:2}},
+    {t:'故意犯一次小错，看看会怎样', w:{mas:2}}
+  ]},
+  {q:'一切结束之后，你最想要：', o:[
+    {t:'把对方捞进怀里，问一句「还撑得住吗」', w:{dom:2}},
+    {t:'替他擦掉汗，顺手再掐他一下', w:{sad:2}},
+    {t:'贴着他不动，想被多抱一会儿', w:{sub:2}},
+    {t:'连说话的力气都没有，但很满足', w:{mas:2}}
+  ]},
+  {q:'片单里你更常点开的是：', o:[
+    {t:'权力博弈、谈判，一个人掌控局面', w:{dom:2}},
+    {t:'互相救赎、被接住的那种', w:{sub:2}},
+    {t:'悬疑、审讯、逼供式的张力', w:{sad:2}},
+    {t:'受苦、忍耐、最后站起来', w:{mas:2}}
+  ]},
+  {q:'微醺之后，你更想听的是：', o:[
+    {t:'结构严谨的古典或电子', w:{dom:1}},
+    {t:'低频、包裹感强的氛围乐', w:{sub:2}},
+    {t:'工业、噪音，越吵越清醒', w:{sad:2}},
+    {t:'慢一点的，能疼进去的那种', w:{mas:1}}
+  ]},
+  {q:'他第一次进你的房间：', o:[
+    {t:'一切都在固定位置，你让他坐哪他就坐哪', w:{dom:2}},
+    {t:'乱一点反而放松，你随他看', w:{sub:1}},
+    {t:'有些只在特定时候才拿出来的东西，你没打算收', w:{sad:2}},
+    {t:'有点乱，习惯了，你也懒得解释', w:{mas:1,sub:1}}
+  ]},
+  {q:'看到有人被当众为难：', o:[
+    {t:'先判断这是不是必要的', w:{dom:1}},
+    {t:'不舒服，想上去帮', w:{sub:2}},
+    {t:'觉得有意思，甚至想看完', w:{sad:2}},
+    {t:'会代入，你也经历过', w:{mas:1}}
+  ]},
+  {q:'你更想被人记住的是：', o:[
+    {t:'有原则、靠得住', w:{dom:2}},
+    {t:'好相处、贴心', w:{sub:2}},
+    {t:'有意思、有点危险', w:{sad:1}},
+    {t:'能忍、能撑', w:{mas:2}}
+  ]},
+  {q:'他送你一件带点暗示的小物：', o:[
+    {t:'你收下，说下次要看他怎么用', w:{dom:1}},
+    {t:'你收下，脸有点热，但还是收了', w:{sub:2}},
+    {t:'你当场拆开，故意问他什么意思', w:{sad:1}},
+    {t:'你把它收进抽屉，等一个被安排好的时机', w:{mas:1,sub:1}}
+  ]},
+  {q:'他手把手教你，胸口贴着你后背：', o:[
+    {t:'你先搭框架，按自己的节奏往下学', w:{dom:2}},
+    {t:'你跟着他一步一步来，手有点不听使唤', w:{sub:2}},
+    {t:'你直接上强度，边错边试', w:{sad:1,mas:1}},
+    {t:'你反复练同一个动作，直到熟练', w:{mas:1}}
+  ]},
+  {q:'深夜一个人，你会想起：', o:[
+    {t:'接下来几天要怎么安排', w:{dom:2}},
+    {t:'某个人的消息，还没等到', w:{sub:2}},
+    {t:'一些带危险感的画面', w:{sad:1}},
+    {t:'什么都不想，让身体记住那种累', w:{mas:2}}
+  ]},
+  {q:'他说你「有点难搞，但很上头」：', o:[
+    {t:'你认，你就是有标准', w:{dom:2}},
+    {t:'你会自责，怕自己不够好', w:{sub:2}},
+    {t:'你挺高兴，说明你不好拿捏', w:{sad:2}},
+    {t:'你被说也受着', w:{mas:1}}
+  ]},
+  {q:'最后一题——你希望它告诉你：', o:[
+    {t:'你确实适合掌控', w:{dom:1}},
+    {t:'你确实适合跟随', w:{sub:1}},
+    {t:'你确实享受张力', w:{sad:1}},
+    {t:'你确实很能承', w:{mas:1}}
+  ]}
+];
+
+/* ============================================================
+   结果文案
+   ============================================================ */
+var RESULTS = {
+  dom:{
+    letter:'DOM', name:'暗室的指挥官', en:'THE ARCHITECT · DOM',
+    quote:'我不急着让你听话。我只要你在我看着的时候，慢慢忘了怎么反抗。',
+    quoteNote:'— 掌控型 · 你的准许就是命令 —',
+    traits:[
+      '默认自己定方向，也真的会为后面每一步负责',
+      '对"讲清楚"有洁癖：规则、界限、后果，都要说到能执行',
+      '危机里反而冷静，越是混乱越能看见结构',
+      '不轻易把权力借出去，但一旦借了，会先确认对方接得住'
+    ],
+    reason:'你在多数情境里把"定方向、划界限、承担结果"选成了默认项。真正让你上瘾的不是控制本身，而是<b>对方在你面前一点点松开</b>的那个过程——你享受的是准许，不是命令。你偏向把权力当作责任的另一种写法：能让人放心交出来的，才配拿着。',
+    strength:'你能给别人一种很稀缺的东西：<b>确定性</b>。在所有人都含糊的时候，你能把话说到可执行的程度；更难得的是，你能让人在你面前卸下防备，而不是竖起防线。',
+    egg:'你手机里有一个只有自己看得懂的清单，里面存着"万一出事怎么办"的预案——从未派上用场，你还是每年更新一次。另外还有一条从没发出去的消息，开头两个字是「过来」。'
+  },
+  sad:{
+    letter:'S', name:'张力的编织者', en:'THE WEAVER · S',
+    quote:'我不破坏你。我只是想看看，你被我看着的时候，会露出哪一种表情。',
+    quoteNote:'— 施与型 · 你的反应就是我的回礼 —',
+    traits:[
+      '对空气的变化极敏感，气氛一散你就想动手',
+      '享受"对方撑不住却还没喊停"的那一秒，那是你确认连接的时刻',
+      '玩笑、挑逗、试探，都是你量距离的尺',
+      '不喜欢真伤害，但喜欢真反应'
+    ],
+    reason:'你在题目里反复选择"把气氛再往前推一点""看看他会怎么反应"。这指向的是<b>施与倾向</b>：你的快感来自反馈——一次呼吸变浅、一句没说完的话，比任何表白都实在。你更像导演，不是狱卒；你要的不是他疼，是他诚实。',
+    strength:'你是把人从"礼貌的僵局"里拽出来的那种人。<b>你能让平淡的场合迅速有了温度</b>，也能先一步打破假客气。这种张力，是很多亲密关系最缺的燃料。',
+    egg:'你大概试过用一句话让整个房间安静两秒，然后若无其事地继续喝水——那一小口水，是你给自己颁的奖。'
+  },
+  sub:{
+    letter:'SUB', name:'交出钥匙的人', en:'THE DEVOTED · SUB',
+    quote:'你把方向盘拿走的时候，我才敢把眼睛闭上。',
+    quoteNote:'— 交付型 · 被接管才是休息 —',
+    traits:[
+      '愿意让渡决定权，但前提是对方真的接得住',
+      '被明确安排的时候，反而更放松、更能专注',
+      '对"被认可"敏感，一句"做得对"能撑你很久',
+      '善于读空气，常比对方更早察觉他需要什么'
+    ],
+    reason:'你在很多题上选了"你定，我都行""希望有人给我指令"。这不是没主见，而是<b>你愿意用控制权换取确定感</b>：方向由可信的人给出，你就能把全部力气放在"做好"上。你要的不是被支配，是被一个靠谱的人接管——然后可以什么都不用想。',
+    strength:'你有一种罕见的能力：<b>让另一个人感到自己被需要、被托住</b>。你给出去的不是顺从，是把自己的安全感押在对方身上——这会让人不敢轻慢你。',
+    egg:'你其实有一套自己的评估系统：一次点菜、一次迟到、一次他接电话的语气，你已经在心里打完分了，而且从不说破。'
+  },
+  mas:{
+    letter:'M', name:'承重的人', en:'THE ENDURER · M',
+    quote:'别急着停。我想知道自己能到哪一步——也想看看，你会不会拦我。',
+    quoteNote:'— 承重型 · 撑住的那一刻最清醒 —',
+    traits:[
+      '忍耐阈值高，而且享受那个"还能再一点"的过程',
+      '不太喊停，更多时候是怕扫兴，也怕被看轻',
+      '对强度和真实感有需求，太平顺反而让你空',
+      '习惯把情绪自己消化，很少现场崩'
+    ],
+    reason:'你的选择集中在"还能继续""越紧越清醒""累到虚脱但满足"。这指向<b>承重倾向</b>：你需要通过承担强度来获得存在感与边界感——痛、累、紧张，对你不是损耗，是坐标。你未必喜欢被伤害，但你需要被"确认"：有人看着你，知道你撑到哪了。',
+    strength:'你的耐受是真实资源：<b>你能在长期压力里保持运转，而多数人早就退场</b>。这种韧性在创业、创作、长期照护里几乎不可替代。',
+    egg:'你有一种奇怪的骄傲：受伤之后先不看医生，先观察它自己怎么好——还会为"恢复得比想象中快"偷偷高兴。'
+  }
+};
+
+/* 副属性短语 */
+var MIX_TEXT = {
+  'dom-sad':'你的掌控带着一点玩心：不只要局面在我手里，还要看它在手里怎么变。',
+  'dom-sub':'你其实可以来回切换——需要时接住方向盘，安全时愿意被带着走。',
+  'dom-mas':'你用承担强度来证明自己的位置：越难的局面，越像你的主场。',
+  'sad-sub':'你会先建立张力，再把自己交出去——搅动水面的人，也想被浪推着走。',
+  'sad-mas':'你既想推，也想被推：对强度的胃口，比对权力的胃口更大。',
+  'sub-mas':'你把交付和承受绑在了一起：被安排，还要被推到边界，才算完整。'
+};
+
+/* ============================================================
+   状态与工具
+   ============================================================ */
+/* 属性关键词（分享卡用） */
+var KW = {
+  dom:['秩序','责任','边界'],
+  sad:['张力','反应','分寸'],
+  sub:['信任','交付','读懂'],
+  mas:['耐受','坐标','沉默']
+};
+var state = { idx:0, answers:[], lock:false };
+var CATS = ['日常习惯','处事方式','社交模式','亲密与边界','情绪与偏好'];
+/* 各维度在全部选项中可获得的总权重：用于校正题目数量/权重分配差异 */
+var WSUM = {dom:0, sad:0, sub:0, mas:0};
+(function computeWeight(){
+  QUESTIONS.forEach(function(item){
+    item.o.forEach(function(opt){
+      DIMS.forEach(function(d){ WSUM[d] += (opt.w[d] || 0); });
+    });
+  });
+})();
+
+/* 选项顺序固定随机化：避免"总选 A 就指向同一属性"的位置偏差 */
+var ORDER = (function(){
+  var seed = 20261125;
+  function rand(){ seed = (seed * 1664525 + 1013904223) % 4294967296; return seed / 4294967296; }
+  return QUESTIONS.map(function(q){
+    var arr = q.o.map(function(_, k){ return k; });
+    for(var i = arr.length - 1; i > 0; i--){
+      var j = Math.floor(rand() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  });
+})();
+
+function $(id){ return document.getElementById(id); }
+function clamp(n,a,b){ return Math.max(a, Math.min(b,n)); }
+function showView(name){
+  ['intro','quiz','result'].forEach(function(v){
+    $('view-'+v).classList.toggle('active', v===name);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ============================================================
+   答题流程
+   ============================================================ */
+function startQuiz(){
+  state.idx = 0;
+  state.answers = new Array(QUESTIONS.length).fill(null);
+  $('counter').style.visibility = 'visible';
+  $('track').style.visibility = 'visible';
+  showView('quiz');
+  renderQuestion();
+}
+
+function renderQuestion(){
+  var i = state.idx;
+  var item = QUESTIONS[i];
+  $('qNow').textContent = String(i+1);
+  $('fill').style.width = ((i / QUESTIONS.length) * 100) + '%';
+  $('qIndex').textContent = 'QUESTION ' + String(i+1).padStart(2,'0');
+  $('qCat').textContent = CATS[Math.min(CATS.length-1, Math.floor(i/10))];
+  $('backBtn').disabled = (i === 0);
+
+  var html = '<p class="q-text"><span class="mark">/</span>' + item.q + '</p><div class="opts">';
+  var order = ORDER[i];
+  order.forEach(function(k, pos){
+    var opt = item.o[k];
+    var picked = state.answers[i] === k ? ' picked' : '';
+    html += '<button class="opt'+picked+'" data-k="'+k+'">'
+         +   '<span class="tag">'+ 'ABCD'[pos] +'</span>'
+         +   '<span>'+ opt.t +'</span>'
+         + '</button>';
+  });
+  html += '</div>';
+
+  var body = $('qBody');
+  body.innerHTML = html;
+  body.classList.remove('view-fade');
+  void body.offsetWidth;
+  body.classList.add('view-fade');
+
+  Array.prototype.forEach.call(body.querySelectorAll('.opt'), function(btn){
+    btn.addEventListener('click', function(){ choose(parseInt(btn.dataset.k,10)); });
+  });
+  state.lock = false;
+}
+
+function choose(k){
+  if(state.lock) return;
+  state.lock = true;
+  var i = state.idx;
+  state.answers[i] = k;
+
+  var opts = $('qBody').querySelectorAll('.opt');
+  Array.prototype.forEach.call(opts, function(b){
+    b.classList.toggle('picked', parseInt(b.dataset.k,10) === k);
+  });
+
+  setTimeout(function(){
+    if(i+1 < QUESTIONS.length){
+      state.idx = i+1;
+      renderQuestion();
+    } else {
+      $('fill').style.width = '100%';
+      setTimeout(computeResult, 260);
+    }
+  }, 300);
+}
+
+function goBack(){
+  if(state.lock) return;
+  if(state.idx > 0){ state.lock = true; state.idx--; renderQuestion(); }
+}
+
+/* ============================================================
+   评分
+   ============================================================ */
+function computeResult(){
+  var raw = {dom:0, sad:0, sub:0, mas:0};
+  state.answers.forEach(function(k, i){
+    if(k === null) return;
+    var w = QUESTIONS[i].o[k].w || {};
+    DIMS.forEach(function(d){ raw[d] += (w[d] || 0); });
+  });
+
+  // 先按各维度可获得的总权重归一，再折算成合计 100% 的构成比
+  var norm = {}, sumNorm = 0;
+  DIMS.forEach(function(d){
+    norm[d] = WSUM[d] > 0 ? raw[d] / WSUM[d] : 0;
+    sumNorm += norm[d];
+  });
+  var pct = {}, maxV = -1, top = null, second = null;
+  DIMS.forEach(function(d){
+    pct[d] = sumNorm > 0 ? (norm[d] / sumNorm) * 100 : 0;
+    if(pct[d] > maxV){ maxV = pct[d]; top = d; }
+  });
+
+  var sorted = DIMS.slice().sort(function(a,b){ return pct[b] - pct[a]; });
+  top = sorted[0]; second = sorted[1];
+  var gap = pct[top] - pct[second];
+  state.pct = pct;
+  renderResult(top, second, gap);
+}
+
+/* ============================================================
+   结果渲染
+   ============================================================ */
+function renderResult(top, second, gap){
+  var r = RESULTS[top];
+  showView('result');
+
+  $('counter').style.visibility = 'hidden';
+  $('track').style.visibility = 'hidden';
+
+  $('resBadge').textContent = 'RESULT · ' + DIM_FULL[top].toUpperCase();
+  $('resLetter').textContent = r.letter;
+  $('resLetter').style.fontSize = r.letter.length > 1 ? '30px' : '44px';
+  $('resLetter').style.letterSpacing = r.letter.length > 1 ? '.08em' : '.06em';
+  $('resName').textContent = r.name;
+  $('resEn').textContent = r.en;
+  $('resQuote').innerHTML = r.quote + '<span>' + r.quoteNote + '</span>';
+
+  var traits = '';
+  r.traits.forEach(function(t){ traits += '<li>' + t + '</li>'; });
+  $('resTraits').innerHTML = traits;
+  $('resSwitches').innerHTML = (r.switches || []).map(function(t){ return '<li>' + t + '</li>'; }).join('');
+  $('resReason').innerHTML = r.reason;
+  $('resStrength').innerHTML = r.strength;
+  $('resEgg').innerHTML = r.egg;
+
+  // 四维光谱
+  var bars = '', scBars = '';
+  DIMS.slice().sort(function(a,b){ return state.pct[b]-state.pct[a]; }).forEach(function(d){
+    var v = Math.round(state.pct[d]);
+    var cls = d === top ? ' bar-row top' : ' bar-row';
+    bars += '<div class="'+cls.trim()+'"><div class="k">'+DIM_LABEL[d]+'</div>'
+         +  '<div class="bar-track"><div class="bar-fill" data-w="'+v+'" style="background:linear-gradient(90deg,'+DIM_COLOR[d]+'44,'+DIM_COLOR[d]+')"></div></div>'
+         +  '<div class="v">'+v+'%</div></div>';
+    scBars += '<div class="'+cls.trim()+'" style="grid-template-columns:36px 1fr 34px;gap:8px"><div class="k" style="font-size:10px">'+DIM_LABEL[d]+'</div>'
+           +  '<div class="bar-track" style="height:4px"><div class="bar-fill" data-w="'+v+'" style="background:'+DIM_COLOR[d]+'"></div></div>'
+           +  '<div class="v" style="font-size:9.5px">'+v+'%</div></div>';
+  });
+  $('bars').innerHTML = bars;
+  $('scBars').innerHTML = scBars;
+
+  // 副属性 / 混合
+  var key1 = top + '-' + second;
+  var key2 = second + '-' + top;
+  var mixLine = MIX_TEXT[key1] || MIX_TEXT[key2] || '';
+  var gapR = Math.round(state.pct[top]) - Math.round(state.pct[second]);
+  var box = '';
+  if(gapR < 8){
+    box = '<div class="mix"><span>双属性</span><p>'+DIM_LABEL[top]+' × '+DIM_LABEL[second]+' 几乎并列——'+mixLine+'</p></div>';
+  } else if(mixLine && state.pct[second] >= 20){
+    box = '<div class="mix"><span>副属性 '+DIM_LABEL[second]+'</span><p>'+mixLine+'</p></div>';
+  }
+  $('mixBox').innerHTML = box;
+
+  // 分享卡
+  $('scName').textContent = r.name;
+  $('scLine').textContent = r.quote;
+
+  // 进度条动画
+  setTimeout(function(){
+    Array.prototype.forEach.call(document.querySelectorAll('.bar-fill'), function(el){
+      el.style.width = el.dataset.w + '%';
+    });
+  }, 120);
+
+  state.result = {
+    top: DIM_LABEL[top], second: DIM_LABEL[second],
+    dim: top, dimSecond: second,
+    name: r.name, en: r.en, quote: r.quote, letter: r.letter,
+    pct: {dom:Math.round(state.pct.dom), sad:Math.round(state.pct.sad), sub:Math.round(state.pct.sub), mas:Math.round(state.pct.mas)}
+  };
+}
+
+/* ============================================================
+   分享 / 重测
+   ============================================================ */
+function copyShare(){
+  var s = state.result;
+  if(!s) return;
+  var txt = '我的 BDSM 属性测试结果：' + s.name + '（' + s.en + '）\n'
+          + '「' + s.quote + '」\n'
+          + 'Dom ' + s.pct.dom + '% · S ' + s.pct.sad + '% · Sub ' + s.pct.sub + '% · M ' + s.pct.mas + '%\n'
+          + '—— 50 题生活化取向测试，仅供自我观察。';
+  var done = function(){ toast('文案已复制，去粘贴吧'); };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done).catch(function(){ legacyCopy(txt, done); });
+  } else { legacyCopy(txt, done); }
+}
+function legacyCopy(txt, cb){
+  var ta = document.createElement('textarea');
+  ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); cb(); }catch(e){ toast('复制失败，可截图保存'); }
+  document.body.removeChild(ta);
+}
+function toast(msg){
+  var t = $('toast'); t.textContent = msg; t.classList.add('on');
+  clearTimeout(t._tid);
+  t._tid = setTimeout(function(){ t.classList.remove('on'); }, 2000);
+}
+
+/* ============================================================
+   分享海报
+   ============================================================ */
+function openPoster(){
+  var s = state.result;
+  if(!s) return;
+  $('pLetter').textContent = s.letter;
+  $('pLetter').style.fontSize = s.letter.length > 1 ? '38px' : '56px';
+  $('pName').textContent = s.name;
+  $('pEn').textContent = s.en;
+  $('pQuote').textContent = s.quote;
+
+  var rows = '';
+  DIMS.slice().sort(function(a,b){ return s.pct[b] - s.pct[a]; }).forEach(function(d){
+    var v = s.pct[d];
+    rows += '<div class="p-bar"><div class="k">' + DIM_LABEL[d] + '</div>'
+         +  '<div class="t"><div class="f" style="width:' + v + '%;background:' + DIM_COLOR[d] + '"></div></div>'
+         +  '<div class="v">' + v + '%</div></div>';
+  });
+  $('pTag').textContent = '主属性 ' + s.top + ' · 副属性 ' + s.second;
+  $('pBars').innerHTML = rows;
+
+  var kws = KW[s.dim] || [];
+  $('pKw').innerHTML = kws.map(function(k){ return '<span>' + k + '</span>'; }).join('');
+
+  $('posterMask').classList.add('on');
+  $('posterTip').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closePoster(){
+  $('posterMask').classList.remove('on');
+  $('posterTip').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+/* ============================================================
+   绑定
+   ============================================================ */
+$('adultOk').addEventListener('change', function(){
+  $('startBtn').disabled = !this.checked;
+});
+$('startBtn').addEventListener('click', function(){
+  if($('startBtn').disabled) return;
+  startQuiz();
+});
+$('backBtn').addEventListener('click', goBack);
+$('againBtn').addEventListener('click', startQuiz);
+$('copyBtn').addEventListener('click', copyShare);
+$('posterBtn').addEventListener('click', openPoster);
+$('posterClose').addEventListener('click', closePoster);
+$('posterMask').addEventListener('click', function(e){
+  if(e.target === $('posterMask')) closePoster();
+});
+$('homeBtn').addEventListener('click', function(){ showView('intro'); });
+
+document.addEventListener('keydown', function(e){
+  if(!$('view-quiz').classList.contains('active')) return;
+  if(['1','2','3','4'].indexOf(e.key) >= 0){
+    var pos = parseInt(e.key,10)-1;
+    var order = ORDER[state.idx];
+    if(pos < order.length) choose(order[pos]);
+  } else if(e.key === 'ArrowLeft'){ goBack(); }
+});
+
+/* ================= 卡密校验 ================= */
+function sha256hex(ascii){
+  var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+  0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+  0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+  0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+  0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+  0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+  0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+  0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  var H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  function rr(x,n){ return (x>>>n)|(x<<(32-n)); }
+  var bytes=[];
+  for(var i=0;i<ascii.length;i++){ bytes.push(ascii.charCodeAt(i)&0xff); }
+  var l=bytes.length;
+  var total=((l+9+63)>>6)<<6;
+  var buf=new Array(total).fill(0);
+  for(var i=0;i<l;i++) buf[i]=bytes[i];
+  buf[l]=0x80;
+  var bitLen=l*8;
+  for(var i=0;i<4;i++){ buf[total-1-i]=(bitLen>>>(8*i))&0xff; }
+  for(var off=0; off<total; off+=64){
+    var W=new Array(64).fill(0);
+    for(var i=0;i<16;i++){
+      var p=off+i*4;
+      W[i]=((buf[p]<<24)|(buf[p+1]<<16)|(buf[p+2]<<8)|buf[p+3])>>>0;
+    }
+    for(var i=16;i<64;i++){
+      var s0=(rr(W[i-15],7)^rr(W[i-15],18)^(W[i-15]>>>3))>>>0;
+      var s1=(rr(W[i-2],17)^rr(W[i-2],19)^(W[i-2]>>>10))>>>0;
+      W[i]=(W[i-16]+s0+W[i-7]+s1)>>>0;
+    }
+    var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+    for(var i=0;i<64;i++){
+      var S1=(rr(e,6)^rr(e,11)^rr(e,25))>>>0;
+      var ch=((e&f)^((~e)&g))>>>0;
+      var t1=(h+S1+ch+K[i]+W[i])>>>0;
+      var S0=(rr(a,2)^rr(a,13)^rr(a,22))>>>0;
+      var maj=((a&b)^(a&c)^(b&c))>>>0;
+      var t2=(S0+maj)>>>0;
+      h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0;
+    }
+    H[0]=(H[0]+a)>>>0;H[1]=(H[1]+b)>>>0;H[2]=(H[2]+c)>>>0;H[3]=(H[3]+d)>>>0;
+    H[4]=(H[4]+e)>>>0;H[5]=(H[5]+f)>>>0;H[6]=(H[6]+g)>>>0;H[7]=(H[7]+h)>>>0;
+  }
+  var hex='';
+  for(var i=0;i<8;i++){
+    var v=H[i].toString(16);
+    while(v.length<8) v='0'+v;
+    hex+=v;
+  }
+  return hex;
+}
+
+(function(){
+  var HASHES = ['438d2c5d6d7a52c3', '16c1ad0570de336e', '13b6f29516fe734c', '435b1cbda162aeee', '5ad4dfbe69b32183', '0efc7e3369498d82', 'c10b5d7c10af1e0f', 'feb777969eba249c', 'a332627ab94b4ab9', 'c22eecefe4bdef6c', 'cdc14c74413fe5c6', 'a8bb9a6a4c3f0c1d', '40cdedc3a09fbc46', '4289e1c90837cbbb', '0f4970d9676fa51c', 'ab607651eb82043b', 'a8344250c626a003', '3a3ef69c48493df5', '00bea7fa3beea322', 'fbff2031238f2945', '4d6247df3f9fd18d', 'de2c09d3967c39f0', '7c89f203c412c72e', '84f1e7410a784a25', 'f070bc02c2a58646', 'bb05119d1789f435', 'c5792d105b29ee5e', 'cb5f803c14b80ea3', 'eb4c5585dba52b22', '225573abddcf530a', 'a225819862faa4f1', '3afb2ed253ed5ed0', 'f036cab87a0fc55f', '05c37a32be5094a3', '9eb4e191bd70a62b', '35af06c6aa08cc3e', '3025c950ff81a592', '31c7852d06d6caec', '73f88ff92f5df5ce', '51d5b7f55d8d4dbe', 'dbd411495d4d6259', '51ad6cb50fb0782b', '774bac2059508281', '8dd78e781a1399a0', '081103cde4ff443a', 'acfa6c5110193974', '4ba2c5e786bd0736', 'ae6c1f675947bf88', 'c402dae14ee4689e', 'fd944895de00e9b8', 'ba08fe681fc45bfa', '6b8189425db8aee8', '9ec04728532557ae', '638e6e205ab22b51', 'e6d9cb78c88285e0', '9d3d2e28dd6d9d00', 'f3bec5056d0307f8', '80ae8a92b9d9f2a2', 'f98769a34ef6ea80', '737ee566d620e819', 'ed5b6beadab1d52e', '88373b876eb2100f', '6164e1946f6b3889', 'aeb70368ea14e4ea', '96f877462b596a12', 'e19eb570679c732d', 'fe02192fbf8c6dd1', 'deda4eabfcbd7355', 'c90526988ae84240', 'ca273763676f8d26', 'b80f999e219d7078', 'cd8e85a09606a251', '1c01106804f81232', 'd613424cb7a86948', '0ba7ee1128e219c5', '7f749fee3aecec26', 'ce7a4ac2c7ea82c8', 'f249ac7ee5f3c808', 'd7ff7aa2b0910733', '0fa6e3e956b00800', 'ef6ae7ebd166e597', '3088712964b6bf91', 'be796c196fed79b1', '9b9ce3c5c1f63cf0', '668161007f29869c', 'dc6b8b7dc1253ce7', 'fcaff3763e295301', 'ab135c0482397be4', 'e6be2ace5bb2467f', 'd24df90a141778e4', '37d449af0a3cc179', '08a9411fc75f6438', '99ba57828242a709', '09899c9e9e3fddfa', 'cdc951b92d0cf499', 'f5749299d51e9dc8', 'b902460e287ae841', 'daf9eaf7670326f7', '70491cd6af62e2a4', '7a3f8dbbdf8f233e', '4e1f9d1fce1e8354', '639b7066a76e16be', '601b9823c35ef028', '43c26d77507def0b', '8791088f1c1895d6', '6983407eed16d69e', '804361d5705e2cf3', '8fc78b16e6780adf', '4360d788139b8768', '5b81f27ee695238a', '28762f877f310c32', '9ace6eacbdcb717a', 'b49b63d5d0d745a4', '49115f66e79e0a23', 'f6f305e5c6030c1e', 'c3b1a35a6e95f8dc', 'b14fd09ead1ebd12', '8abeb5ee20855ed6', '08d73edd381ff766', 'b5a5fa48a931442c', '13e3aa7456704841', '8315512773681911', '17e4fc03dd387d7c', '2a933234f1b22c63', 'b96457e7cb1225cd', '21239c95fefdc11a', '1d4809b2a8408902', '8f32b3a3f26b27c0', 'd8c1d2e17fda7a8b', '9b6d07b7bb6843ce', 'e6e7ef17477b25ac', '55e506206b4e4436', 'a2bff16979f272bf', 'e6d12b571e93ec7c', '5a357eb7898cb75d', 'c51aa30e60a69e23', '891185735b54d3ec', '01a5ea65741e20f8', '9fdb0fed56deb4bf', 'add072dc9d071233', '147cb23b1f409c8d', 'dbc7da0fb4438b88', '030f392f9ca4e21e', 'a74a665a35281a1b', '06216dc124827fec', '88d3b4f55da08b01', 'ff16e2fbe455cb12', 'd314516bf41b4b80', 'd6ddc5a1879103b2', '49664d8c899fbe5d', 'c01002f4b1c1c878', 'b860a2260db20442', 'c34875ea40a2d4ea', '41b49d04e06ca9a3', 'c4a11b0aa28302de', 'c8c2c678ed919cf8', '5bfec5cb7953ae4c', '614616b70e603e73', '10971b84fb7eb8f3', '839eb809c3cc91a2', '8609e0d63d350adc', 'f33b759a3ce6ea10', '9e9ae46215bdbcdc', 'ea37e0c54e530ca8', 'bda2a0bbeb4dfe57', '78ce1cccad9969db', '4a44bf79f0ad8d1d', 'ee555717f7b8e07f', 'dcee277d84b0ccd8', 'a1a3f9868425fa06', '38356337d909aec0', '58e5dda4a0eae937', '32e3f81936cd657e', '8d5310b88d22e916', '87d414992ab00b3a', '6df4e42e5391ccc9', '7bb8af9f6073405c', 'd4a8414c28f10a95', 'ca4e1496333947cd', '64a4d9f3256a21e3', 'ce6d96081a1a82da', 'd371e8258fa22103', 'f52d86bdcc3d80ee', '1bba5b6a5b2d2e8b', 'bb2e9b4c4aedbcd9', 'a115a097d8f947f1', 'eb8e8bb448bc1cde', 'c29022339af9441c', 'b253a7c12906af74', 'e82c11b3a69592f2', 'ce9311f1868b8b32', 'a5eaa4485afed31b', 'dd6f345e329dab22', '745f6b99c612c97a', '0c8aa92aad4451f7', '50c9aa819666b0bb', 'fd39b42181ffada1', '643f507e9de10719', 'ccd251b33114e867', '3e850fff0517557a', 'aa3379c1fbb90759', '31bfc79c59556070', '84f77dfd3655c641', 'b6ae7ed85b94afdf', '21ead1c044745f0e', '089279ad30429cad', '6d4e403e27b2d0f2', '03c87fbdc6b1616d', 'cdbff623cd4ce5ed', '0bf83f52bcb77664', 'c9a6f902ea15c158', '3787d301187719f9', 'a66a9bfccffe619a', 'f2ddbed0b53d7b64', 'bfd1d1eeb7a19eec', '6950ca75d12e8e77', 'ad9d16201b985e1b', '44d3a4107c0f93dd', 'c7e1bef39f136f62', 'f15a985e477b8acc', '8dad4f3acf4bc34a', 'f399785bb74654f6', 'de4de0066016b2ec', '89896ba02c1c6625', '1680f23d3635d0fa', '22d46d6807a0149c', 'eb2bcc4e9842419a', 'f8b3ada8ffb51728', 'c50d1c159b8ef0e7', '9102a0b1cd5d570a', '6c965020e4e2813f', '40b1780d1115cd39', '8091775f77c8067b', '6731540f698e9e01', '0ce1221d59945b18', '2b12830bec8d7eca', '763489d6683caf13', '93fa109ff56c99e5', '3eb9e2ac6321c306', '9f0b1fa51ef2005e', '0c9486377feec7e4', '57aec0fe8c27b1c0', '814ee430f8bd5ec6', '2763d214b1c47f0d', 'c9bbfa7577f3d279', '288e3e383ca02276', 'f5c0d2c9bfff7993', '06a16a69089d1bed', '07b5f0ba5ee5045b', 'ac2ae1718b7ae985', '8c4e6a185869ad32', 'ac163cb9930cf235', 'fe81882d9867f594', 'b93895d168fcda89', 'ad90c1104854fc7e', '9fc20abcb7b9b257', 'eef110ab63467d93', 'a1a2081c746d60d0', 'e844201672cdf13b', 'a944f091865cb80b', '11949800c89e27d2', '4e152aba313dd925', 'bd196705f847402a', 'bba2add8b8bb547a', '665da9c7f7b91a59', 'd277e8b3d0b498c4', '51a683871a872cce', '17d0342598a38e69', '74f78d997ec280df', '30caef8086bf330f', 'b4d22135a6464bd7', '6049ef99c2d12625', '8a735c018ae1bef8', 'cd7f322145fcaf6e', '01787953b4cad7e2', '7caebf2f113227b7', '9a24e0ac5312d470', 'd5c1ce796fe8585b', '6e395015ea97de5b', '9d2e5ba03e125874', 'fa0f0be88ee93df1', '8f5add391d0e6dc3', '0fe864698041a62a', 'def50f76a18798e8', '3951ba946faa5fc5', 'd630586b48ce560e', 'b62582aea3f46fe1', 'fed8c78b596e80d4', 'b0387ccc4bfbf663', '2bc34c31826e3432', '187347382c7708fa', '64cb8f0df2640abf', 'ad27be12e099c277', '76795d555c7cb078', '0e3e27a651f308c8', 'd286bd747e29fe56', '21faa992e4c1c14b', '5cb5bc713bd311ea', '61e5976c9e53de09', '9fa04814d1f5c06f'];
+  var LS = 'rq_lic_v1';
+
+  function norm(s){ return (s||'').toUpperCase().replace(/[^0-9A-Z]/g,''); }
+  function digest(s){ return sha256hex(s).slice(0,16); }
+
+  function paintLic(nick){
+    if(!nick) return;
+    if($('licTag')) return;
+    var el = document.createElement('div');
+    el.id = 'licTag';
+    el.textContent = '授权给 ' + nick;
+    document.body.appendChild(el);
+  }
+
+  function unlock(nick){
+    document.body.classList.remove('locked');
+    var g = $('gate');
+    if(g) g.parentNode.removeChild(g);
+    paintLic(nick);
+    window.scrollTo(0,0);
+  }
+
+  function readLic(){
+    try{ return JSON.parse(localStorage.getItem(LS) || 'null'); }catch(e){ return null; }
+  }
+
+  /* 已解锁过：直接进 */
+  var lic = readLic();
+  if(lic && HASHES.indexOf(lic.h) >= 0){ unlock(lic.n); return; }
+
+  function tryUnlock(){
+    var raw = $('gateCode').value;
+    var n = norm(raw);
+    var err = $('gateErr');
+    if(n.length < 10){
+      err.textContent = '访问码格式不对，请对照购买时收到的卡片';
+      return;
+    }
+    var h = digest(n);
+    if(HASHES.indexOf(h) === -1){
+      err.textContent = '访问码无效，请核对字母与数字（注意 O 与 0、I 与 1）';
+      $('gateCode').select();
+      return;
+    }
+    var nick = ($('gateNick').value || '').trim().slice(0,16);
+    try{ localStorage.setItem(LS, JSON.stringify({h:h, n:nick})); }catch(e){}
+    unlock(nick);
+  }
+
+  $('gateBtn').addEventListener('click', tryUnlock);
+  $('gateCode').addEventListener('keydown', function(e){ if(e.key === 'Enter') tryUnlock(); });
+  $('gateNick').addEventListener('keydown', function(e){ if(e.key === 'Enter') tryUnlock(); });
+  $('gateCode').addEventListener('input', function(){ $('gateErr').textContent = ''; });
+})();
+
+</script>
+</body>
+</html>
